@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 interface BlogPost {
     _id: string;
     title: string;
-    body: string;
+    content: string;
     createdAt: string;
 }
 
@@ -22,6 +22,7 @@ const LatestPost: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const API_BASE = import.meta.env.VITE_API_BASE;
+    console.log("API_BASE:", API_BASE);
 
     useEffect(() => {
         fetch(`${API_BASE}/api/blogs`)
@@ -32,6 +33,7 @@ const LatestPost: React.FC = () => {
             return res.json();
         })
         .then((data) => {
+            console.log("Fetched data:", data)
             if (data.length > 0) {
                 setPost(data[0]);   // Assumes newest post is first
             }
@@ -54,7 +56,7 @@ const LatestPost: React.FC = () => {
                 {new Date(post.createdAt).toLocaleDateString()}
             </p>
             <p className="text-gray-800 mb-4">
-                {post.body.slice(0, 150)}...
+                {post.content.slice(0, 150)}...
             </p>
             <Link to="/blog" className="text-blue-600 hover:underline">
                 Continue reading →
