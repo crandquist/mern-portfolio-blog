@@ -3,6 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv')
 
+// Import the blogs router
+const blogRoutes = require('./routes/blogs');
+
 // Load variables from .env into process.env
 dotenv.config();
 
@@ -11,6 +14,9 @@ const app = express();
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
+
+// Mount blog routes under /api/blogs
+app.use('/api/blogs', blogRoutes);
 
 // Root route for basic sanity check
 app.get('/', (req, res) => {
