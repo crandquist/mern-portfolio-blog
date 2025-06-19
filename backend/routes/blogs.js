@@ -68,6 +68,11 @@ router.post('/', async (req, res) => {
  * @access Development only
  */
 router.post('/seed', async (req, res) => {
+    // Prevent this route from running in production
+    if (process.env.NODE_ENV !== 'development') {
+        return res.status(403).json({message: 'Forbidden: seed route is disabled in production'});
+    }
+    
     try {
         // Delete all existing blog posts
         await BlogPost.deleteMany();
