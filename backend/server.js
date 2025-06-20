@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv')
+const cors = require('cors');
 
 // Import the blogs router
 const blogRoutes = require('./routes/blogs');
@@ -11,6 +12,9 @@ dotenv.config();
 
 //Initialize an Express app instance
 const app = express();
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
