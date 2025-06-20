@@ -18,7 +18,7 @@ const router = express.Router();
  */
 router.get('/', async (req, res) => {
     try {
-        // Query the database for ever BlogPost, sorted by creation date
+        // Query the database for every BlogPost, sorted by creation date
         const posts = await BlogPost.find().sort({ createdAt: -1 });
 
         // Respond with JSON array of blog posts
@@ -98,6 +98,38 @@ router.post('/seed', async (req, res) => {
     } catch (err) {
         console.error('Error seeding blog posts:', err.message);
         res.status(500).json({ message: 'Failed to seed blog posts' });
+    }
+});
+
+/**
+ * @route GET /api/blogs/:id
+ * @desc Retrieve a single blog post by ID
+ * @access Public
+ */
+router.get('/:id', async (req, res) => {
+    try {
+        // Extract post ID from request parameters
+        const postId = req.params.id;
+
+        // Validate the ID format
+        if (!mongoose.Types.ObjectId.isValid(postId)) {
+            return res.status(400).json({ message: 'Invalid blog post ID' });
+        }
+
+        // Find the post by ID
+        const post = await BlogPost.findById(postId);
+
+        // If no post found, return 404
+        if (!post) {
+            return res.status(404).json({ message: 'Blog post not found' });
+        }
+
+        // Respond with json if found
+        res.json(post);
+    } catch (err) {
+        // Log server error & send a generic message to the client
+        console.error('Error fetching blog post:', err.message);
+        res.status(500).json({message: 'Server error retrieving posts'});
     }
 });
 
