@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * Represents a blog post fetched from the backend API.
@@ -55,7 +56,13 @@ const BlogList: React.FC = () => {
             <ul className="space-y-6">
                 {posts.map((post) => (
                     <li key={post._id} className="borderr rounded-lg p-4 shadow-sm bg-white">
-                        <h3 className="text-xl font-semibold mb-1">{post.title}</h3>
+
+                        {/* Wrap clickable content in a link */}
+                        <Link to={`/blog/${post._id}`} className="block hover:underline">
+                            <h3 className="text-xl font-semibold mb-1">{post.title}</h3>
+                        </Link>
+                        
+                        {/* Display post creation date and content */}
                         <p className="text-sm text-gray-500 mb-2">
                             {new Date(post.createdAt).toLocaleDateString()}
                         </p>
