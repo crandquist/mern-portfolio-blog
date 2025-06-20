@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 interface BlogPost {
     _id: string;
     title: string;
-    body: string;
+    content: string;
     createdAt: string;
 }
 
@@ -24,7 +24,7 @@ const BlogList: React.FC = () => {
 
     // Fetch blog posts from API on component mount
     useEffect(() => {
-        fetch(`${API_BASE}/posts`)
+        fetch(`${API_BASE}/api/blogs`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -59,7 +59,7 @@ const BlogList: React.FC = () => {
                         <p className="text-sm text-gray-500 mb-2">
                             {new Date(post.createdAt).toLocaleDateString()}
                         </p>
-                        <p className="text-gray-700 line-clamp-3">{post.body}</p>
+                        <p className="text-gray-700 line-clamp-3">{post.content}</p>
                     </li>
                 ))}
             </ul>
