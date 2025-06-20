@@ -7,6 +7,7 @@
 
 const express = require('express');
 const BlogPost = require('../models/BlogPost'); // Mongoose model
+const mongoose = require('mongoose'); // For ObjectId validation
 
 // Create a router instance - keeps routes modular
 const router = express.Router();
@@ -110,6 +111,7 @@ router.get('/:id', async (req, res) => {
     try {
         // Extract post ID from request parameters
         const postId = req.params.id;
+        console.log(`GET /api/blogs/${postId}`); // Log the request for debugging
 
         // Validate the ID format
         if (!mongoose.Types.ObjectId.isValid(postId)) {
