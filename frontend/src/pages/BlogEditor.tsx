@@ -70,6 +70,30 @@ export function BlogEditor() {
     }
   };
 
+  /**
+   * applyFormat
+   * -----------
+   * Inserts markdown syntax at the selected text inside the content textarea.
+   */
+  function applyFormat(prefix: string, suffix: string) {
+    const textarea = document.getElementById('content') as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.slice(start, end);
+    const newText = prefix + selectedText + suffix;
+
+    const updated = content.slice(0, start) + newText + content.slice(end);
+    setContent(updated);
+
+    // Refocus the cursor after inserting text
+    setTimeout(() => {
+        textarea.focus();
+        textarea.selectionStart = textarea.selectionEnd = start + prefix.length + selectedText.length + suffix.length;
+    }, 0);
+  }
+
   return (
     <section className="max-w-3xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-6">Create a New Blog Post</h1>
@@ -104,6 +128,13 @@ export function BlogEditor() {
         {/* Content */}
         <div>
           <label htmlFor="content" className="block font-medium mb-1">Content</label>
+          {/* Formatting Buttons */}
+          <div className="flex gap-2 mb-2">
+            <button type="button" onClick={() => applyFormat('**', '**')} className="px-2 py-1 bg-gray-200 rounded">Bold</button>
+            <button type="button" onClick={() => applyFormat('_', '_')} className="px-2 py-1 bg-gray-200 rounded">Italic</button>
+            <button type="button" onClick={() => applyFormat('#', '')} className="px-2 py-1 bg-gray-200 rounded">Heading</button>
+          </div>
+
           <textarea
             id="content"
             className="w-full border border-gray-300 rounded px-3 py-2 h-48"
