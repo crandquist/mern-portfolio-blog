@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
+import { NavBar } from './components/NavBar'
+
 // Page components
 import BlogPage from './pages/BlogPage';
 import HomePage from './pages/HomePage';
@@ -61,29 +63,32 @@ function App() {
   console.log("Is Admin:", isAdmin);
 
   return (
-    <Routes>
-      {/* Public homepage */}
-      <Route path ="/" element={<HomePage />} />
+    <>
+      <NavBar isAdmin={isAdmin} />
+      <Routes>
+        {/* Public homepage */}
+        <Route path ="/" element={<HomePage />} />
 
-      {/* Blog index listing */}
-      <Route path ="/blog" element={<BlogPage />} />
+        {/* Blog index listing */}
+        <Route path ="/blog" element={<BlogPage />} />
 
-      {/* Blog detail page (public) */}
-      <Route path ="/blog/:id" element={<BlogDetail />} />
+        {/* Blog detail page (public) */}
+        <Route path ="/blog/:id" element={<BlogDetail />} />
 
-      {/* Admin-only blog editor route */}
-      <Route 
-      path ="/admin/new" 
-      element={
-        <ProtectedRoute>
-          <BlogEditor />
-        </ProtectedRoute> 
-        }
-      />
+        {/* Admin-only blog editor route */}
+        <Route 
+        path ="/admin/new" 
+        element={
+          <ProtectedRoute>
+            <BlogEditor />
+          </ProtectedRoute> 
+          }
+        />
 
-      {/* Add more routes as needed */}
-    
-    </Routes>
+        {/* Add more routes as needed */}
+      
+      </Routes>
+    </>
   );
 }
 

@@ -12,7 +12,7 @@ import type { LogoutOptions } from '@auth0/auth0-react';
  * - Admin-only link to "New Post"
  * - Login/Logout functionality using Auth0
  */
-export function Navbar({ isAdmin }: { isAdmin: boolean }) {
+export function NavBar({ isAdmin }: { isAdmin: boolean }) {
     const {
         isAuthenticated,
         loginWithRedirect,
