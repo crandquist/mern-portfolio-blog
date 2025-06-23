@@ -16,6 +16,7 @@ export function BlogEditor() {
     // Controlled form state
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [showPreview, setShowPreview] = useState(false);
 
     /**
     * statusMessage and statusType
@@ -131,6 +132,17 @@ export function BlogEditor() {
         </div>
       )}
 
+      {/* Toggle between Edit and Preview */}
+      <div className="flex justify-end mb-4">
+        <button
+            type="button"
+            onClick={() => setShowPreview((prev) => !prev)}
+            className="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded"
+        >
+            {showPreview ? 'Edit Mode' : 'Preview Mode'}
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div>
@@ -155,13 +167,20 @@ export function BlogEditor() {
             <button type="button" onClick={() => applyFormat('#', '')} className="px-2 py-1 bg-gray-200 rounded">Heading</button>
           </div>
 
-          <textarea
-            id="content"
-            className="w-full border border-gray-300 rounded px-3 py-2 h-48"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
+          {showPreview ? (
+            <div
+                className="w-full border border-gray-300 rounded px-3 py-2 bg-white prose prose-sm max-w-none min-h-[12rem]"
+                dangerouslySetInnerHTML={{__html: marked.parse( content || '') }}
+            />
+          ) : (
+            <textarea
+                id="content"
+                className="w-full border border-gray-300 rounded px-3 py-2 h-48"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                required
+            />
+          )}
         </div>
 
         {/* Submit */}
@@ -172,15 +191,6 @@ export function BlogEditor() {
           Publish Post
         </button>
       </form>
-      
-      {/* Markdown Preview */}
-      <div className="mt-10">
-        <h2 className="text-xl font-semibold mb-2">Live Preview</h2>
-        <div
-            className="prose prose-sm max-w-none bg-gray-50 border rounded p-4"
-            dangerouslySetInnerHTML={{ __html: marked.parse(content || '') }}
-        />
-      </div>
     </section>
   );
 }
