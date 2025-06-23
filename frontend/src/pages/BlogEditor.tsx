@@ -1,6 +1,7 @@
 // frontend/src/pages/BlogEditor.tsx
 
 import { useState } from 'react';
+import { marked } from 'marked';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
@@ -120,6 +121,15 @@ export function BlogEditor() {
           Publish Post
         </button>
       </form>
+      
+      {/* Markdown Preview */}
+      <div className="mt-10">
+        <h2 className="text-xl font-semibold mb-2">Live Preview</h2>
+        <div
+            className="prose prose-sm max-w-none bg-gray-50 border rounded p-4"
+            dangerouslySetInnerHTML={{ __html: marked.parse(content || '') }}
+        />
+      </div>
     </section>
   );
 }
