@@ -33,7 +33,7 @@ export function NavBar({ isAdmin }: { isAdmin: boolean }) {
                 </Link>
                 {isAdmin && (
                     <Link
-                        to="/new-post"
+                        to="/admin/new"
                         className="text-lg font-semibold text-gray-700 hover:text-black"
                     >
                         New Post
