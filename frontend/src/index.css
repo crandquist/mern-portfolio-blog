@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional tweaks only if needed */
-@layer base {
-  :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  }
+body {
+  @apply bg-zinc-950 text-zinc-100;
 }
