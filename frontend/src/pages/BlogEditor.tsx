@@ -37,6 +37,7 @@ export function BlogEditor() {
     localStorage.setItem("blog-draft", JSON.stringify({ title, content }));
   }, [title, content]);
 
+  // Submit blog post to backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatusMessage("");
@@ -70,6 +71,7 @@ export function BlogEditor() {
     }
   };
 
+  // Apply markdown-style formatting around selected content
   const applyFormat = (prefix: string, suffix: string) => {
     const textarea = document.getElementById("content") as HTMLTextAreaElement;
     if (!textarea) return;
@@ -82,6 +84,7 @@ export function BlogEditor() {
 
     setContent(updated);
 
+    // Restore cursor position after formatting
     setTimeout(() => {
       textarea.focus();
       textarea.selectionStart = textarea.selectionEnd =
@@ -91,10 +94,12 @@ export function BlogEditor() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-12 text-white">
+      {/* Page Title */}
       <h1 className="mb-8 text-3xl font-bold text-teal-400">
         Create a New Blog Post
       </h1>
 
+      {/* Status Feedback */}
       {statusMessage && (
         <div
           className={`mb-6 rounded-md px-4 py-3 text-sm font-medium ${
@@ -107,6 +112,7 @@ export function BlogEditor() {
         </div>
       )}
 
+      {/* Toggle Preview Mode */}
       <div className="mb-4 flex justify-end">
         <button
           type="button"
@@ -117,6 +123,7 @@ export function BlogEditor() {
         </button>
       </div>
 
+      {/* Blog Form */}
       <form
         onSubmit={handleSubmit}
         className="space-y-6 rounded-lg bg-zinc-900 p-6 shadow-lg"
@@ -134,12 +141,12 @@ export function BlogEditor() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white placeholder-zinc-400 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:outline-none"
+            className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white placeholder-zinc-400 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:outline-none"
             required
           />
         </div>
 
-        {/* Content Field with Buttons */}
+        {/* Content Editor */}
         <div>
           <label
             htmlFor="content"
@@ -148,6 +155,7 @@ export function BlogEditor() {
             Content
           </label>
 
+          {/* Markdown formatting buttons */}
           <div className="mb-2 flex flex-wrap gap-2">
             <button
               type="button"
@@ -172,6 +180,7 @@ export function BlogEditor() {
             </button>
           </div>
 
+          {/* Content Field or Markdown Preview */}
           {showPreview ? (
             <div
               className="prose prose-invert min-h-[12rem] w-full max-w-none rounded-md border border-zinc-700 bg-zinc-800 px-4 py-4"
@@ -182,7 +191,7 @@ export function BlogEditor() {
               id="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="h-48 w-full resize-y rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white placeholder-zinc-400 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:outline-none"
+              className="h-48 w-full resize-y rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white placeholder-zinc-400 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:outline-none"
               required
             />
           )}
@@ -191,7 +200,7 @@ export function BlogEditor() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-5 py-2 font-semibold text-white transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:outline-none"
+          className="rounded-md bg-teal-600 px-5 py-2 font-semibold text-white transition hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:outline-none"
         >
           Publish Post
         </button>
