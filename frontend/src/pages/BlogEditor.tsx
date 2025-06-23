@@ -116,7 +116,7 @@ export function BlogEditor() {
   }
 
   return (
-    <section className="max-w-3xl mx-auto px-4 py-10">
+    <section className="max-w-3xl mx-auto px-4 py-10 text-white">
       <h1 className="text-2xl font-bold mb-6">Create a New Blog Post</h1>
 
       {/* Feedback message */}
@@ -137,45 +137,47 @@ export function BlogEditor() {
         <button
             type="button"
             onClick={() => setShowPreview((prev) => !prev)}
-            className="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded"
+            className="text-sm bg-zinc-700 hover:bg-zinc-600 px-3 py-1 rounded"
         >
             {showPreview ? 'Edit Mode' : 'Preview Mode'}
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-900 p-6 rounded-lg shadow-lg">
         {/* Title */}
         <div>
-          <label htmlFor="title" className="block font-medium mb-1">Title</label>
+          <label htmlFor="title" className="block font-semibold mb-1 text-sm">Title</label>
           <input
             id="title"
             type="text"
-            className="w-full border border-gray-300 rounded px-3 py-2"
+            className="w-full bg-zinc-800 border border-zinc-70000 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
 
-        {/* Content */}
+        {/* Content and Formatting */}
         <div>
-          <label htmlFor="content" className="block font-medium mb-1">Content</label>
+          <label htmlFor="content" className="block font-semibold mb-1 text-sm">Content</label>
+          
           {/* Formatting Buttons */}
           <div className="flex gap-2 mb-2">
-            <button type="button" onClick={() => applyFormat('**', '**')} className="px-2 py-1 bg-gray-200 rounded">Bold</button>
-            <button type="button" onClick={() => applyFormat('_', '_')} className="px-2 py-1 bg-gray-200 rounded">Italic</button>
-            <button type="button" onClick={() => applyFormat('#', '')} className="px-2 py-1 bg-gray-200 rounded">Heading</button>
+            <button type="button" onClick={() => applyFormat('**', '**')} className="text-sm px-2 py-1 bg-zinc-700 hover:bg-zinc-600 rounded">Bold</button>
+            <button type="button" onClick={() => applyFormat('_', '_')} className="text-sm px-2 py-1 bg-zinc-700 hover:bg-zinc-600 rounded">Italic</button>
+            <button type="button" onClick={() => applyFormat('#', '')} className="text-sm px-2 py-1 bg-zinc-700 hover:bg-zinc-600 rounded">Heading</button>
           </div>
 
+            {/* Textarea or Preview */}
           {showPreview ? (
             <div
-                className="w-full border border-gray-300 rounded px-3 py-2 bg-white prose prose-sm max-w-none min-h-[12rem]"
+                className="w-full border border-zinc-700 rounded px-3 py-4 bg-zinc-800 prose prose-invert max-w-none min-h-[12rem]"
                 dangerouslySetInnerHTML={{__html: marked.parse( content || '') }}
             />
           ) : (
             <textarea
                 id="content"
-                className="w-full border border-gray-300 rounded px-3 py-2 h-48"
+                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-white h-48 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 required
@@ -183,7 +185,7 @@ export function BlogEditor() {
           )}
         </div>
 
-        {/* Submit */}
+        {/* Submit Button */}
         <button
           type="submit"
           className="bg-blue-600 text-white font-medium px-4 py-2 rounded hover:bg-blue-700 transition"
