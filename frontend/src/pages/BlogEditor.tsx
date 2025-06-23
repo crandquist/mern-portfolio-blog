@@ -1,6 +1,7 @@
 // frontend/src/pages/BlogEditor.tsx
 
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { marked } from 'marked';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
@@ -12,20 +13,39 @@ const API_BASE = import.meta.env.VITE_API_BASE;
  * Features controlled form inputs, submission feedback, and backend integration.
  */
 export function BlogEditor() {
-  // Controlled form state
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-  const [content, setContent] = useState('');
+    // Controlled form state
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
-  /**
-   * statusMessage and statusType
-   * ----------------------------
-   * Provides real-time user feedback for submission status.
-   * - statusType: "success" or "error"
-   * - statusMessage: human-readable message for user
-   */
-  const [statusMessage, setStatusMessage] = useState('');
-  const [statusType, setStatusType] = useState<'success' | 'error'>('success');
+    /**
+    * statusMessage and statusType
+    * ----------------------------
+    * Provides real-time user feedback for submission status.
+    * - statusType: "success" or "error"
+    * - statusMessage: human-readable message for user
+    */
+    const [statusMessage, setStatusMessage] = useState('');
+    const [statusType, setStatusType] = useState<'success' | 'error'>('success');
+
+    // Load draft from loacalStorage on initial mount
+    useEffect(() => {
+        const savedDraft = localStorage.getItem('blog-draft');
+        if (savedDraft) {
+            try {
+                const { title, content } = JSON.parse(savedDraft);
+                setTitle(title);
+                setContent(content);
+            } catch (err) {
+                console.warn('Failed to parse saved draft:', err);
+            }
+        }
+    }, []);
+
+    // Save draft to localStorage on change
+    useEffect(() => {
+        const draft = JSON.stringify({ title, content });
+        localStorage.setItem('blog-draft', draft);
+    }, [title, content]);
 
   /**
    * handleSubmit
