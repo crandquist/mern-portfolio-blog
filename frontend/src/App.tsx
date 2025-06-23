@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -34,9 +35,31 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
  * App
  * ----
  * Defines all client-side routes for the portfolio/blog site.
+ * Adds admin detection based on the logged-in user's email,
+ * enabling role-based rendering in other components like the navbar.
  * Includes both public and protected views, using React Router and Auth0.
 */
 function App() {
+  const { user, isAuthenticated } = useAuth0();
+
+  /**
+   * isAdmin
+   * --------
+   * Boolean flag for whether the logged-in user is an admin.
+   * Determined by checking the user's email against a static admin list.
+   */
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated && user?.email) {
+      const adminEmails = ["cat.randquist@gmail.com"];
+      setIsAdmin(adminEmails.includes(user.email));
+    }
+  }, [isAuthenticated, user]);
+
+  // For development: log admin status
+  console.log("Is Admin:", isAdmin);
+
   return (
     <Routes>
       {/* Public homepage */}
