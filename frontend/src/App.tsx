@@ -88,6 +88,9 @@ function App() {
         {/* Add more routes as needed */}
       
       </Routes>
+      <p className="text-sm text-gray-500">
+        Status: {isAuthenticated ? "Logged in" : "Logged out"}
+      </p>
     </>
   );
 }
