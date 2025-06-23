@@ -117,7 +117,7 @@ export function BlogEditor() {
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-10 text-white">
-      <h1 className="text-2xl font-bold mb-6">Create a New Blog Post</h1>
+      <h1 className="text-2xl font-bold text-teal-600 mb-6">Create a New Blog Post</h1>
 
       {/* Feedback message */}
       {statusMessage && (
